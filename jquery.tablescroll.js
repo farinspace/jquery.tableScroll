@@ -70,12 +70,26 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 			wrapper.css
 			({
-				'width': (width+settings.scrollbarWidth)+'px',
+				'width': width+'px',
 				'height': settings.height+'px',
 				'overflow': 'auto'
 			});
 
 			tb.css('width',width+'px');
+
+			// with border difference
+			var wrapper_width = wrapper.outerWidth();
+			var diff = wrapper_width-width;
+
+			// assume table will scroll
+			wrapper.css({width:((width-diff)+settings.scrollbarWidth)+'px'});
+			tb.css('width',(width-diff)+'px');
+
+			if (tb.outerHeight() <= settings.height)
+			{
+				wrapper.css({height:'auto',width:(width-diff)+'px'});
+				flush = false;
+			}
 
 			// using wrap does not put wrapper in the DOM right 
 			// away making it unavailable for use during runtime
@@ -108,12 +122,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 			if (has_tfoot) 
 			{
 				var tbf = $('<table class="tablescroll_foot" cellspacing="0"></table>').insertAfter(wrapper).prepend($('tfoot',tb));
-			}
-
-			if (tb.outerHeight() <= settings.height)
-			{
-				wrapper.css('height','auto');
-				flush = false;
 			}
 
 			if (tbh != undefined)
