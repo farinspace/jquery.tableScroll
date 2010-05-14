@@ -48,6 +48,16 @@ OTHER DEALINGS IN THE SOFTWARE.
 	
 	$.fn.tableScroll = function(options)
 	{
+		if (options == 'undo')
+		{
+			var container = $(this).parent().parent();
+			container.find('.tablescroll_head thead').prependTo(this);
+			container.find('.tablescroll_foot tfoot').appendTo(this);
+			container.before(this);
+			container.empty();
+			return;
+		}
+
 		var settings = $.extend({},$.fn.tableScroll.defaults,options);
 
 		settings.scrollbarWidth = getScrollbarWidth();
