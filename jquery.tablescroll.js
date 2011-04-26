@@ -51,10 +51,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 		if (options == 'undo')
 		{
 			var container = $(this).parent().parent();
-			container.find('.tablescroll_head thead').prependTo(this);
-			container.find('.tablescroll_foot tfoot').appendTo(this);
-			container.before(this);
-			container.empty();
+                        if (container.hasClass('tablescroll_wrapper')) 
+                        {
+			        container.find('.tablescroll_head thead').prependTo(this);
+                                container.find('.tablescroll_foot tfoot').appendTo(this);
+			        container.before(this);
+			        container.empty();
+                        }
 			return;
 		}
 
