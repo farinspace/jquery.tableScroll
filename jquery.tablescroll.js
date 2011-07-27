@@ -64,10 +64,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 		var settings = $.extend({},$.fn.tableScroll.defaults,options);
 		
 		// Bail out if there's no vertical overflow
-		if ($(this).height() <= settings.height)
-		{
-		  return this;
-		}
+		//if ($(this).height() <= settings.height)
+		//{
+		//  return this;
+		//}
 
 		settings.scrollbarWidth = getScrollbarWidth();
 
