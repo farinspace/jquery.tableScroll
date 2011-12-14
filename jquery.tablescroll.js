@@ -77,7 +77,14 @@ OTHER DEALINGS IN THE SOFTWARE.
 			
 			var tb = $(this).addClass('tablescroll_body');
 
-			var wrapper = $('<div class="tablescroll_wrapper"></div>').insertBefore(tb).append(tb);
+            // find or create the wrapper div (allows tableScroll to be re-applied)
+            var wrapper;
+            if (tb.parent().hasClass('tablescroll_wrapper')) {
+                wrapper = tb.parent();
+            }
+            else {
+                wrapper = $('<div class="tablescroll_wrapper"></div>').insertBefore(tb).append(tb);
+            }
 
 			// check for a predefined container
 			if (!wrapper.parent('div').hasClass(settings.containerClass))
