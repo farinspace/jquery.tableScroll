@@ -135,8 +135,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 			{
 				w = $(this).width();
 
-				$('th:eq('+i+'), td:eq('+i+')',thead_tr_first).css('width',w+'px');
-				$('th:eq('+i+'), td:eq('+i+')',tbody_tr_first).css('width',w+'px');
+				$('th:eq('+i+'), td:eq('+i+')',thead_tr_first).css('min-width',w+'px');
+				$('th:eq('+i+'), td:eq('+i+')',tbody_tr_first).css('min-width',w+'px');
 				if (has_tfoot) $('th:eq('+i+'), td:eq('+i+')',tfoot_tr_first).css('width',w+'px');
 			});
 
