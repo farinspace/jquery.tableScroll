@@ -45,7 +45,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 		scrollbarWidth = (w1 - w2);
 		return scrollbarWidth;
 	}
-	
+
 	$.fn.tableScroll = function(options)
 	{
 		if (options == 'undo')
@@ -62,7 +62,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 		}
 
 		var settings = $.extend({},$.fn.tableScroll.defaults,options);
-		
+
 		// Bail out if there's no vertical overflow
 		//if ($(this).height() <= settings.height)
 		//{
@@ -74,7 +74,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 		this.each(function()
 		{
 			var flush = settings.flush;
-			
+			var preserveClass = settings.preserveClass;
+
+			var tbClasses = $(this).attr('class');
 			var tb = $(this).addClass('tablescroll_body');
 
             // find or create the wrapper div (allows tableScroll to be re-applied)
@@ -143,17 +145,19 @@ OTHER DEALINGS IN THE SOFTWARE.
 			if (has_thead) 
 			{
 				var tbh = $('<table class="tablescroll_head" cellspacing="0"></table>').insertBefore(wrapper).prepend($('thead',tb));
+				if(preserveClass) tbh.addClass(tbClasses);
 			}
 
 			if (has_tfoot) 
 			{
 				var tbf = $('<table class="tablescroll_foot" cellspacing="0"></table>').insertAfter(wrapper).prepend($('tfoot',tb));
+				if(preserveClass) tbf.addClass(tbClasses)
 			}
 
 			if (tbh != undefined)
 			{
 				tbh.css('width',width+'px');
-				
+
 				if (flush)
 				{
 					$('tr:first th:last, tr:first td:last',tbh).css('width',(w+settings.scrollbarWidth)+'px');
@@ -182,7 +186,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 		flush: true, // makes the last thead and tbody column flush with the scrollbar
 		width: null, // width of the table (head, body and foot), null defaults to the tables natural width
 		height: 100, // height of the scrollable area
-		containerClass: 'tablescroll' // the plugin wraps the table in a div with this css class
+		containerClass: 'tablescroll', // the plugin wraps the table in a div with this css class
+		preserveClass: true // the plugin will add the table class to the header and footer
 	};
 
 })(jQuery);
