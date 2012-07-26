@@ -50,15 +50,16 @@ OTHER DEALINGS IN THE SOFTWARE.
 	{
 		if (options == 'undo')
 		{
-			var container = $(this).parent().parent();
-			if (container.hasClass('tablescroll_wrapper')) 
+			var container = this.parent().parent();
+			if (container.hasClass('tablescroll'))
 			{
 				container.find('.tablescroll_head thead').prependTo(this);
 				container.find('.tablescroll_foot tfoot').appendTo(this);
 				container.before(this);
-				container.empty();
+				container.remove();
+				this.removeClass('tablescroll_body');
 			}
-			return;
+			return this;
 		}
 
 		var settings = $.extend({},$.fn.tableScroll.defaults,options);
