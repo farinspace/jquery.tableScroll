@@ -108,12 +108,17 @@ OTHER DEALINGS IN THE SOFTWARE.
 			var diff = wrapper_width-width;
 
 			// assume table will scroll
-			wrapper.css({width:((width-diff)+settings.scrollbarWidth)+'px'});
-			tb.css('width',(width-diff)+'px');
+			if (!settings.widthIncludesScrollbar) {
+				wrapper.css({width:((width-diff)+settings.scrollbarWidth)+'px'});
+				tb.css('width',(width-diff)+'px');
+			} else {
+				tb.css('width',(width-settings.scrollbarWidth)+'px');
+			}
 
 			if (tb.outerHeight() <= settings.height)
 			{
 				wrapper.css({height:'auto',width:(width-diff)+'px'});
+				tb.css('width',width+'px');
 				flush = false;
 			}
 
@@ -182,7 +187,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 		flush: true, // makes the last thead and tbody column flush with the scrollbar
 		width: null, // width of the table (head, body and foot), null defaults to the tables natural width
 		height: 100, // height of the scrollable area
-		containerClass: 'tablescroll' // the plugin wraps the table in a div with this css class
+		containerClass: 'tablescroll', // the plugin wraps the table in a div with this css class
+		widthIncludesScrollbar: false // if true then the width parameter is equal to (table width + scrollbar width)
+																	// otherwise width is always equal to table width regarding scrollbar.
 	};
 
 })(jQuery);
