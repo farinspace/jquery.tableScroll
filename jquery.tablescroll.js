@@ -133,16 +133,18 @@ OTHER DEALINGS IN THE SOFTWARE.
 			var tbody_tr_first = $('tbody tr:first',tb);
 			var tfoot_tr_first = $('tfoot tr:first',tb);
 
-			// remember width of last cell
-			var w = 0;
+			var cell_widths = [];
 
 			$('th, td',thead_tr_first).each(function(i)
 			{
-				w = $(this).width();
+				cell_widths[i] = $(this).width();
+			});
 
-				$('th:eq('+i+'), td:eq('+i+')',thead_tr_first).css('width',w+'px');
-				$('th:eq('+i+'), td:eq('+i+')',tbody_tr_first).css('width',w+'px');
-				if (has_tfoot) $('th:eq('+i+'), td:eq('+i+')',tfoot_tr_first).css('width',w+'px');
+			$('th, td',thead_tr_first).each(function(i)
+			{
+				$('th:eq('+i+'), td:eq('+i+')',thead_tr_first).css('width',cell_widths[i]+'px');
+				$('th:eq('+i+'), td:eq('+i+')',tbody_tr_first).css('width',cell_widths[i]+'px');
+				if (has_tfoot) $('th:eq('+i+'), td:eq('+i+')',tfoot_tr_first).css('width',cell_widths[i]+'px');
 			});
 
 			if (has_thead) 
@@ -161,7 +163,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 				
 				if (flush)
 				{
-					$('tr:first th:last, tr:first td:last',tbh).css('width',(w+settings.scrollbarWidth)+'px');
+					$('tr:first th:last, tr:first td:last',tbh).css('width',(cell_widths[cell_widths.length-1]+settings.scrollbarWidth)+'px');
 					tbh.css('width',wrapper.outerWidth() + 'px');
 				}
 			}
@@ -172,7 +174,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 				if (flush)
 				{
-					$('tr:first th:last, tr:first td:last',tbf).css('width',(w+settings.scrollbarWidth)+'px');
+					$('tr:first th:last, tr:first td:last',tbf).css('width',(cell_widths[cell_widths.length-1]+settings.scrollbarWidth)+'px');
 					tbf.css('width',wrapper.outerWidth() + 'px');
 				}
 			}
