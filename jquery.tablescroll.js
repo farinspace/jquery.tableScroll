@@ -108,12 +108,17 @@ OTHER DEALINGS IN THE SOFTWARE.
 			var diff = wrapper_width-width;
 
 			// assume table will scroll
-			wrapper.css({width:((width-diff)+settings.scrollbarWidth)+'px'});
-			tb.css('width',(width-diff)+'px');
+			if (!settings.widthIncludesScrollbar) {
+				wrapper.css({width:((width-diff)+settings.scrollbarWidth)+'px'});
+				tb.css('width',(width-diff)+'px');
+			} else {
+				tb.css('width',(width-settings.scrollbarWidth)+'px');
+			}
 
 			if (tb.outerHeight() <= settings.height)
 			{
 				wrapper.css({height:'auto',width:(width-diff)+'px'});
+				tb.css('width',width+'px');
 				flush = false;
 			}
 
@@ -128,16 +133,18 @@ OTHER DEALINGS IN THE SOFTWARE.
 			var tbody_tr_first = $('tbody tr:first',tb);
 			var tfoot_tr_first = $('tfoot tr:first',tb);
 
-			// remember width of last cell
-			var w = 0;
+			var cell_widths = [];
 
 			$('th, td',thead_tr_first).each(function(i)
 			{
-				w = $(this).width();
+				cell_widths[i] = $(this).width();
+			});
 
-				$('th:eq('+i+'), td:eq('+i+')',thead_tr_first).css('width',w+'px');
-				$('th:eq('+i+'), td:eq('+i+')',tbody_tr_first).css('width',w+'px');
-				if (has_tfoot) $('th:eq('+i+'), td:eq('+i+')',tfoot_tr_first).css('width',w+'px');
+			$('th, td',thead_tr_first).each(function(i)
+			{
+				$('th:eq('+i+'), td:eq('+i+')',thead_tr_first).css('width',cell_widths[i]+'px');
+				$('th:eq('+i+'), td:eq('+i+')',tbody_tr_first).css('width',cell_widths[i]+'px');
+				if (has_tfoot) $('th:eq('+i+'), td:eq('+i+')',tfoot_tr_first).css('width',cell_widths[i]+'px');
 			});
 
 			if (has_thead) 
@@ -156,7 +163,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 				
 				if (flush)
 				{
-					$('tr:first th:last, tr:first td:last',tbh).css('width',(w+settings.scrollbarWidth)+'px');
+					$('tr:first th:last, tr:first td:last',tbh).css('width',(cell_widths[cell_widths.length-1]+settings.scrollbarWidth)+'px');
 					tbh.css('width',wrapper.outerWidth() + 'px');
 				}
 			}
@@ -167,7 +174,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 				if (flush)
 				{
-					$('tr:first th:last, tr:first td:last',tbf).css('width',(w+settings.scrollbarWidth)+'px');
+					$('tr:first th:last, tr:first td:last',tbf).css('width',(cell_widths[cell_widths.length-1]+settings.scrollbarWidth)+'px');
 					tbf.css('width',wrapper.outerWidth() + 'px');
 				}
 			}
@@ -182,7 +189,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 		flush: true, // makes the last thead and tbody column flush with the scrollbar
 		width: null, // width of the table (head, body and foot), null defaults to the tables natural width
 		height: 100, // height of the scrollable area
-		containerClass: 'tablescroll' // the plugin wraps the table in a div with this css class
+		containerClass: 'tablescroll', // the plugin wraps the table in a div with this css class
+		widthIncludesScrollbar: false // if true then the width parameter is equal to (table width + scrollbar width)
+																	// otherwise width is always equal to table width regarding scrollbar.
 	};
 
 })(jQuery);
