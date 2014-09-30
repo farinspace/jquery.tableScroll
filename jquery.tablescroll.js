@@ -111,7 +111,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 			wrapper.css({width:((width-diff)+settings.scrollbarWidth)+'px'});
 			tb.css('width',(width-diff)+'px');
 
-			if (tb.outerHeight() <= settings.height)
+			if (wrapper.outerHeight() <= settings.height)
 			{
 				wrapper.css({height:'auto',width:(width-diff)+'px'});
 				flush = false;
