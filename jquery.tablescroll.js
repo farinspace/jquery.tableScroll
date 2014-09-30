@@ -74,6 +74,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 		this.each(function()
 		{
 			var flush = settings.flush;
+
+			// Check height is more than desired.
+			var tb = $(this);
+			if (tb.outerHeight() <= settings.height) return this;
 			
 			var tb = $(this).addClass('tablescroll_body');
 
