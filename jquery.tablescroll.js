@@ -51,12 +51,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 		if (options == 'undo')
 		{
 			var container = $(this).parent().parent();
-			if (container.hasClass('tablescroll_wrapper')) 
+			if (container.hasClass('tablescroll')) 
 			{
 				container.find('.tablescroll_head thead').prependTo(this);
 				container.find('.tablescroll_foot tfoot').appendTo(this);
 				container.before(this);
 				container.empty();
+				container.remove();
 			}
 			return;
 		}
@@ -124,9 +125,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 			// possible speed enhancements
 			var has_thead = $('thead',tb).length ? true : false ;
 			var has_tfoot = $('tfoot',tb).length ? true : false ;
-			var thead_tr_first = $('thead tr:first',tb);
-			var tbody_tr_first = $('tbody tr:first',tb);
-			var tfoot_tr_first = $('tfoot tr:first',tb);
+			var thead_tr_first = $('thead tr:visible:first',tb);
+			var tbody_tr_first = $('tbody tr:visible:first',tb);
+			var tfoot_tr_first = $('tfoot tr:visible:first',tb);
 
 			// remember width of last cell
 			var w = 0;
